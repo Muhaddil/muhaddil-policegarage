@@ -205,7 +205,13 @@ function ApplyVehicleCustomization(vehicle, config)
     end
 
     if config.livery then
-        SetVehicleLivery(vehicle, config.livery)
+        SetVehicleModKit(vehicle, 0)
+
+        if config.livery.type == "livery" then
+            SetVehicleLivery(vehicle, config.livery.index)
+        elseif config.livery.type == "mod" then
+            SetVehicleMod(vehicle, 48, config.livery.index, false)
+        end
     end
 
     if config.extras then
@@ -265,7 +271,7 @@ RegisterNUICallback('spawnVehicle', function(data, cb)
     local spawnCoords = currentGarage.spawnPoint
     local vehicle = CreateVehicle(modelHash, spawnCoords.x, spawnCoords.y, spawnCoords.z, spawnCoords.w, true, false)
 
-    local playerJob = GetPlayerJob() or 'police'     -- fallback
+    local playerJob = GetPlayerJob() or 'police' -- fallback
     local platePrefix = Config.PlaterPerJob[playerJob.name] or 'LSPD'
 
     local plateNumber = platePrefix .. math.random(1000, 9999)

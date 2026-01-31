@@ -83,11 +83,25 @@ end
 
 function GetVehicleLiveries(vehicle)
     local liveries = {}
-    local count = GetVehicleLiveryCount(vehicle)
 
-    if count and count > 0 then
-        for i = 0, count - 1 do
-            table.insert(liveries, i)
+    local liveryCount = GetVehicleLiveryCount(vehicle)
+    if liveryCount and liveryCount > 0 then
+        for i = 0, liveryCount - 1 do
+            table.insert(liveries, {
+                type = "livery",
+                index = i
+            })
+        end
+    end
+
+    SetVehicleModKit(vehicle, 0)
+    local modLiveryCount = GetNumVehicleMods(vehicle, 48)
+    if modLiveryCount and modLiveryCount > 0 then
+        for i = 0, modLiveryCount - 1 do
+            table.insert(liveries, {
+                type = "mod",
+                index = i
+            })
         end
     end
 
