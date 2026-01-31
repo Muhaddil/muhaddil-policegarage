@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Police Garage</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app" style="display: none;">
+        <div class="header">
+            <div class="header-left">
+                <div class="badge-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L4 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-8-5zm0 2.18l6 3.5V13c0 4.52-2.98 8.69-6 9.93-3.02-1.24-6-5.41-6-9.93V7.68l6-3.5zM10 17l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1>GARAJE POLICIAL</h1>
+                    <p id="garageName">Sistema de Vehículos LSPD</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="stat-box">
+                    <span class="stat-value" id="totalVehicles">0</span>
+                    <span class="stat-label">VEHÍCULOS</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value" id="favoriteCount">0</span>
+                    <span class="stat-label">FAVORITOS</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>FLOTA DISPONIBLE</h2>
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" data-filter="all">
+                            <span>TODOS</span>
+                        </button>
+                        <button class="filter-tab" data-filter="favorites">
+                            <span>★</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="category-filters" id="categoryFilters">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+
+                <div class="vehicle-list" id="vehicleList">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+            </div>
+
+            <div class="preview-section">
+                <div class="preview-header">
+                    <div class="preview-title">
+                        <h2 id="previewName">SELECCIONA UN VEHÍCULO</h2>
+                        <span class="preview-category" id="previewCategory">---</span>
+                    </div>
+                    <button class="btn-favorite" id="toggleFavorite">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="preview-container">
+                    <div class="preview-backdrop">
+                        <div class="grid-overlay"></div>
+                        <div class="spotlight"></div>
+                    </div>
+                    <div class="preview-info-overlay">
+                        <div class="preview-model-name" id="previewModel">---</div>
+                        <div class="rotation-hint">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
+                            </svg>
+                            <span>Vista 360° automática</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">⚡</div>
+                        <div class="stat-content">
+                            <span class="stat-label">VELOCIDAD</span>
+                            <div class="stat-bar">
+                                <div class="stat-bar-fill" id="speedBar" style="width: 0%"></div>
+                            </div>
+                            <span class="stat-value" id="speedValue">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🚀</div>
+                        <div class="stat-content">
+                            <span class="stat-label">ACELERACIÓN</span>
+                            <div class="stat-bar">
+                                <div class="stat-bar-fill" id="accelBar" style="width: 0%"></div>
+                            </div>
+                            <span class="stat-value" id="accelValue">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-content">
+                            <span class="stat-label">MANEJO</span>
+                            <div class="stat-bar">
+                                <div class="stat-bar-fill" id="handlingBar" style="width: 0%"></div>
+                            </div>
+                            <span class="stat-value" id="handlingValue">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🛑</div>
+                        <div class="stat-content">
+                            <span class="stat-label">FRENADO</span>
+                            <div class="stat-bar">
+                                <div class="stat-bar-fill" id="brakingBar" style="width: 0%"></div>
+                            </div>
+                            <span class="stat-value" id="brakingValue">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="customization-panel">
+                <div class="panel-header">
+                    <h2>PERSONALIZACIÓN</h2>
+                </div>
+
+                <div class="custom-section">
+                    <h3>COLOR DE CARROCERÍA</h3>
+                    <div class="color-selector" id="colorSelector">
+                        <!-- Se llenará dinámicamente -->
+                    </div>
+                </div>
+
+                <div class="custom-section">
+                    <h3>LIVERY</h3>
+                    <div class="livery-selector" id="liverySelector">
+                        <!-- Se llenará dinámicamente -->
+                    </div>
+                </div>
+
+                <div class="custom-section">
+                    <h3>EXTRAS</h3>
+                    <div class="extras-list" id="extrasList">
+                        <!-- Se llenará dinámicamente -->
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="spawnBtn" disabled>
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+                        </svg>
+                        <span>DESPLEGAR VEHÍCULO</span>
+                    </button>
+                    <button class="btn btn-secondary" id="resetBtn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+                        </svg>
+                        <span>RESTABLECER</span>
+                    </button>
+                </div>
+
+                <div class="capacity-info">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                    </svg>
+                    <span>Capacidad: <strong id="capacityValue">0</strong> ocupantes</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-close" id="closeBtn">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
